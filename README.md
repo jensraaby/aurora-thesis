@@ -1,20 +1,18 @@
 Aurora-thesis
 =============
 
-This repo contains a variety of Matlab scripts and functions used during my
-thesis work. It's been cleaned up somewhat but can be messy in parts. It is not
-intended for random people to be able to run this code, as they won't have the
-data needed.
+This repo contains a variety of Matlab scripts and functions used during my thesis work. 
+It's been cleaned up somewhat but can be messy in parts. It is not intended for random people to be able to run this code, as they won't have the data needed.
 
-Notes for running
-=================
+Notes for using the code
+========================
 It's easiest if you add all the directories to your MATLAB runtime path.
 For example, you could run the following:
 ```
 addpath(genpath('aurora-thesis'))
 ```
 
-## Functions
+### Functions
 - ```cartesian2polar``` - used for resampling images using
   interpolation
 - ```findclosest``` - utility for searching vectors
@@ -50,5 +48,35 @@ normalised version of matrix and a cell array of their filenames
   coordinate conversion
 
 
-## Scripts
+### Expectation Maximisation
+In the ```em``` folder there are files from my 2013 project on extracting features using the E-M algorithm to represent images as a Gaussian Mixture Model.
+
+For the thesis work, only ```update_mixture.m``` was used - this contains the algorithm for iterating the mixture model.
+
+### Clustering
+The ```clustering``` folder contains code used to running clustering experiments. Experiments involve creating a feature vector for each event, and these are generated from pre-computed features (saved to disk as MAT files).
+-  ```AbstractFeatures``` is essentially a definition of an (object oriented) interface for a set of clustering features.
+- ```BlobFeatures``` is a class for loading features for clustering using multi scale blobs. Instantiating an object of this class allows specifying which features are put into the feature vectors.
+- ```EMComponentsFeatures``` - load features from Gaussian Mixture Models
+- ```EllipseFeatures``` - load ellipse parameters
+- ```EllipseBlobFeatures``` - load both ellipse and blob features
+- ```clusteranalysis``` and ```clusterdensityGaussian``` are used for running some quick experiments and analysis of clustering. You probably can’t use them as is, but they demonstrate how to use the ```BlobFeatures``` class.
+
+### Laplacianblobs
+This folder contains a lot of functions and other code relating to detecting multi-scale blobs. Only listing interesting ones here:
+- ```detectBlobs``` is the main function for extracting blobs given an image, and scale parameters
+- ```filterDayside``` is an example of a way to filter irrelevant blobs. We assume dayside is between 06:00 and 18:00 MLT and the interesting range of latitudes is between 50 and 70 MLAT.
+- ```saveAllBlobsOnlyPeak``` - this is a function for detecting blobs for peak images, and saving the results to disk. It has hard-coded parameters for the output directories (subdirectory name is the ‘blobsdirname’ parameter) and blob scales - it should be self-explanatory.
+
+### Ovalfit
+Functions for fitting ovals to the images. This could still be improved - the basic approach is Jesper’s, but probably simplified in places. The main issue is the image quality…
+- ```fitEllipse``` - this method involves generating several guess ellipses and choosing the best of them using the ```eval_ellipse_binary``` function.
+- ```fitEllipsesAllNew``` is a script function which uses ```fitEllipse``` to detect ellipses and save the parameters to disk. Note it uses hard-coded paths. The intensity-scale is a multiplicative factor for image intensity (basically a unit conversion).
+
 ### Experiments
+This contains files for running clustering experiments.
+
+### Data Processing
+Scripts for extracting features over the entire data set.
+
+
