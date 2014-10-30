@@ -12,6 +12,9 @@ For example, you could run the following:
 addpath(genpath('aurora-thesis'))
 ```
 
+### 3rd Party
+A variety of functions from other developers. The ```blobs``` directory contains the multi scale Laplacian code and the C++ code for 3D extrema search, which needs to be compiled to a mex file.
+
 ### Functions
 - ```cartesian2polar``` - used for resampling images using
   interpolation
@@ -74,9 +77,17 @@ Functions for fitting ovals to the images. This could still be improved - the ba
 - ```fitEllipsesAllNew``` is a script function which uses ```fitEllipse``` to detect ellipses and save the parameters to disk. Note it uses hard-coded paths. The intensity-scale is a multiplicative factor for image intensity (basically a unit conversion).
 
 ### Experiments
-This contains files for running clustering experiments.
+This contains files for running clustering experiments. The main file for running a batch of clustering experiments is ```allexperiments.m```. The ```clusterBlobsPeak``` etc. files do similar things, all producing plots which are saved to disk.
+
+- ```doClustering``` does the actual work using feature objects (see the ```Clustering``` folder above).
+- ```plotClustering``` is a helper function for producing figures about cluster statistics
+- ```replotClusters``` will reload cluster data and generate new plots/figures
+
 
 ### Data Processing
 Scripts for extracting features over the entire data set.
+- ```batchProcessEvents``` takes a function handle and performs a ‘map’ over all events in a directory
+- ```detectBlobs…``` - these files scan over all events in a directory and detect multi scale blobs, saving the data to subdirectories for each event. This is where the scales and blurring etc. are changed.
+- ```processEvent2mat``` is another higher-level mapping function for processing all events using a function handle
 
 
